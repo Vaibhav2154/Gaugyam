@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "675529152947",
+    "project_id": "gaugyam",
+    "storage_bucket": "gaugyam.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675529152947:android:8a00e18af5663feab613c6",
+        "android_client_info": {
+          "package_name": "com.gaugyam.gaugyam"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWGtFUjQ_DsByh32lMVm6X7Jst-C_f3Nw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
