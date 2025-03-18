@@ -29,7 +29,7 @@ class _OtpScreenState extends State<OtpScreen> {
         // Redirect to home if OTP is valid
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(builder: (context) => MainScreen()),
         );
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
