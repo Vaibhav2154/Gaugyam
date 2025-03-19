@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gaugyam/core/theme/app_pallete.dart';
 import 'package:gaugyam/features/home/home_page.dart';
 
 
@@ -32,10 +33,12 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
+
         index: _selectedIndex,
         children: _pages,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: AppPallete.whiteColor,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -65,6 +68,8 @@ class _MainScreenState extends State<MainScreen> {
 }
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,6 +81,8 @@ class HomeScreen extends StatelessWidget {
 }
 
 class SearchScreen extends StatelessWidget {
+  const SearchScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,6 +93,8 @@ class SearchScreen extends StatelessWidget {
 }
 
 class AppointmentScreen extends StatelessWidget {
+  const AppointmentScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,6 +105,8 @@ class AppointmentScreen extends StatelessWidget {
 }
 
 class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
