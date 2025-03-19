@@ -1,11 +1,20 @@
 // GeminiService.dart
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class GeminiService {
   // Replace with your actual Gemini API key
-  final String apiKey = 'AIzaSyB1R_hKDu2P9j0cD7b_ZM11xW8qz0AorDw';
+  // final String apiKey = 'AIzaSyB1R_hKDu2P9j0cD7b_ZM11xW8qz0AorDw';
   final String apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+
+  // Store API key in environment variables or secure storage
+  // To use this:
+  // 1. Add flutter_dotenv package to pubspec.yaml
+  // 2. Create a .env file in project root with: GEMINI_API_KEY=your_key_here
+  // 3. Load the .env file in main.dart: await dotenv.load(fileName: ".env");
+  final String apiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
+      // defaultValue: ''); // Don't hardcode the actual key
 
   Future<String> generateCowFeedingPlan({
     required String productionStage,
