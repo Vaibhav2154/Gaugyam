@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gaugyam/core/theme/app_pallete.dart';
 import 'package:gaugyam/features/home/home_page.dart';
+import 'package:gaugyam/features/search_screen/pages/search_screen.dart';
 
 
 
@@ -18,7 +19,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _pages = [
     HomeScreen(),
-    SearchScreen(),
+    Search(),
     AppointmentScreen(),
     DashboardScreen(),
   ];
@@ -33,7 +34,6 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
-
         index: _selectedIndex,
         children: _pages,
       ),

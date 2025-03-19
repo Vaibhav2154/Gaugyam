@@ -52,7 +52,7 @@ class AuthService {
       Completer<AuthStateData> completer = Completer<AuthStateData>();
       
       await _auth.verifyPhoneNumber(
-        phoneNumber: "+91" + phoneNumber.trim(),
+        phoneNumber: "+91${phoneNumber.trim()}",
         verificationCompleted: (PhoneAuthCredential credential) async {
           // Auto verification completed
           await _auth.signInWithCredential(credential);

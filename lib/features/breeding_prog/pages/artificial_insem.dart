@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gaugyam/core/theme/app_pallete.dart';
-import 'package:gaugyam/features/breeding_prog/widgets/build_selection.dart';
+import 'package:gaugyam/core/utils/build_selection.dart';
 
 class ArtificialInseminationPage extends StatelessWidget {
+  const ArtificialInseminationPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

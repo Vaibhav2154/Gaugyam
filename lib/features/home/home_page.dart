@@ -4,6 +4,7 @@ import 'package:gaugyam/core/theme/app_pallete.dart';
 import 'package:gaugyam/features/auth/pages/phoneauth_page.dart';
 import 'package:gaugyam/features/auth/providers/auth_providers.dart';
 import 'package:gaugyam/features/breeding_prog/pages/breeding_prog.dart';
+import 'package:gaugyam/features/search_screen/pages/search_screen.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -23,6 +24,49 @@ class HomePage extends ConsumerWidget {
       }
     });
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(color: AppPallete.gradient1),
+              child: const Text(
+                'Menu',
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
+            ),
+            ListTile(
+              title: const Text('Home'),
+              leading: const Icon(Icons.home),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Breeding Assistant'),
+              leading: const Icon(Icons.pets),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BreedingProg()),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Search'),
+              leading: const Icon(Icons.search),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Search()),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         title: Align(
           alignment: Alignment.centerLeft,
@@ -98,7 +142,7 @@ class HomePage extends ConsumerWidget {
             ),
             SizedBox(height: 30),
             Text("Nearest Visit", style: TextStyle(color: Color(0xFF394D6D))),
-            Container(child: Text("Nearest Doctor Visited")),
+            Text("Nearest Doctor Visited"),
           ],
         ),
       ),
