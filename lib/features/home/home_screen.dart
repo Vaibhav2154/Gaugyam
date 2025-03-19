@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gaugyam/features/home/home_page.dart';
 
-void main() {
-  runApp(MyApp());
-}
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MainScreen(),
-    );
-  }
-}
+
 
 class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }
@@ -76,9 +68,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Home')),
       body: Center(
-        child: homePage(),
+        child: HomePage(),
       ),
     );
   }

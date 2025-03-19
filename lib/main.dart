@@ -1,13 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gaugyam/core/theme/theme.dart';
-import 'package:gaugyam/features/auth/pages/auth_screen.dart';
 import 'package:gaugyam/features/auth/pages/phoneauth_page.dart';
+import 'package:gaugyam/features/auth/providers/auth_providers.dart';
 import 'package:gaugyam/features/home/home_screen.dart';
 import 'package:gaugyam/firebase_options.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
     await Firebase.initializeApp(
@@ -16,40 +16,56 @@ void main() async{
   } catch (e) {
     print("Firebase Initialization Error: $e"); // Log error if Firebase fails
   }
-  runApp(const MyApp());
+  runApp(
+    // Wrap the entire app with ProviderScope to enable Riverpod
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
 
-  // This widget is the root of your application.
+class MyApp extends ConsumerWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Initialize auth state check when app starts
+    Future.microtask(() {
+      ref.read(authStateNotifierProvider.notifier).checkAuthStatus();
+    });
+    
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Gaugyam',
       theme: AppTheme.lightThemeMode,
       debugShowCheckedModeBanner: false,
       home: AuthWrapper(),
     );
   }
 }
-// Add this to your imports
 
-class AuthWrapper extends StatelessWidget {
-  const AuthWrapper({super.key});
+// Convert AuthWrapper to use Riverpod
+class AuthWrapper extends ConsumerWidget {
+  const AuthWrapper({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        // If the user is logged in
-        if (snapshot.hasData) {
-          // Return your home screen or dashboard
-          return PhoneAuthScreen(); // Replace with your actual home page
-        }
-        // If the user is not logged in
-        return PhoneAuthScreen();
-      },
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Watch auth state from Riverpod provider
+    final authState = ref.watch(authStateNotifierProvider);
+    
+    // If authenticated, go to home screen, otherwise to phone auth
+    return authState.state == AuthState.authenticated
+        ? PhoneAuthScreen() // Your home screen
+        : PhoneAuthScreen();
+        
+    // Alternatively, you can still use StreamBuilder with Riverpod:
+    // return StreamBuilder<User?>(
+    //   stream: FirebaseAuth.instance.authStateChanges(),
+    //   builder: (context, snapshot) {
+    //     if (snapshot.hasData) {
+    //       return MainScreen();
+    //     }
+    //     return PhoneAuthScreen();
+    //   },
+    // );
   }
 }

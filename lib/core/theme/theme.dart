@@ -10,6 +10,8 @@ class AppTheme {
     scaffoldBackgroundColor: AppPallete.whiteColor,
     appBarTheme: AppBarTheme(
       backgroundColor: AppPallete.whiteColor,
+      foregroundColor: AppPallete.primaryFgColor,
+      iconTheme: IconThemeData(color: AppPallete.gradient1),
       elevation: 0,
     ),
     chipTheme: ChipThemeData(
