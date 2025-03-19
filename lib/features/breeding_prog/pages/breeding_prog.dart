@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gaugyam/features/breeding_prog/pages/artificial_insem.dart';
 import 'package:gaugyam/features/breeding_prog/pages/embryo_trans.dart';
 import 'package:gaugyam/features/breeding_prog/pages/natural_breed.dart';
-import 'package:gaugyam/features/breeding_prog/widgets/build_selection.dart';
+import 'package:gaugyam/core/utils/build_selection.dart';
 
 class BreedingProg extends StatefulWidget {
   const BreedingProg({super.key});

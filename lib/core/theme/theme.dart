@@ -15,7 +15,7 @@ class AppTheme {
       elevation: 0,
     ),
     chipTheme: ChipThemeData(
-      color: MaterialStateProperty.all(AppPallete.primaryFgColor),
+      color: WidgetStateProperty.all(AppPallete.primaryFgColor),
       side: BorderSide.none,
     ),
     inputDecorationTheme: InputDecorationTheme(
