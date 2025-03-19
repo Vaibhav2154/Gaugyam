@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gaugyam/core/theme/theme.dart';
 import 'package:gaugyam/features/auth/pages/phoneauth_page.dart';
 import 'package:gaugyam/features/auth/providers/auth_providers.dart';
-import 'package:gaugyam/features/home/home_screen.dart';
+import 'package:gaugyam/features/home/home_page.dart';
 import 'package:gaugyam/firebase_options.dart';
 
 void main() async {
@@ -54,7 +54,7 @@ class AuthWrapper extends ConsumerWidget {
     
     // If authenticated, go to home screen, otherwise to phone auth
     return authState.state == AuthState.authenticated
-        ? PhoneAuthScreen() // Your home screen
+        ? HomePage() // Your home screen
         : PhoneAuthScreen();
         
     // Alternatively, you can still use StreamBuilder with Riverpod:
