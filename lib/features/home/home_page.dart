@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gaugyam/core/theme/app_pallete.dart';
+import 'package:gaugyam/features/assistant/pages/chat_assistant.dart';
 import 'package:gaugyam/features/auth/pages/phoneauth_page.dart';
 import 'package:gaugyam/features/auth/providers/auth_providers.dart';
 import 'package:gaugyam/features/breeding_prog/pages/breeding_prog.dart';
+import 'package:gaugyam/features/assistant/pages/cow_feeding_assitant_screen.dart';
 import 'package:gaugyam/features/search_screen/pages/search_screen.dart';
 
 class HomePage extends ConsumerWidget {
@@ -28,12 +30,22 @@ class HomePage extends ConsumerWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
-              decoration: BoxDecoration(color: AppPallete.gradient1),
-              child: const Text(
+            SizedBox(height: 60),
+            Text(
                 'Menu',
-                style: TextStyle(color: Colors.white, fontSize: 24),
+                style: TextStyle(color: AppPallete.whiteColor, fontSize: 24),
               ),
+            SizedBox(height: 20),
+            ListTile(
+              title: const Text('Search'),
+              leading: const Icon(Icons.search),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Search()),
+                );
+              },
             ),
             ListTile(
               title: const Text('Home'),
@@ -54,13 +66,28 @@ class HomePage extends ConsumerWidget {
               },
             ),
             ListTile(
-              title: const Text('Search'),
-              leading: const Icon(Icons.search),
+              title: const Text('Feeding Assistant'),
+              leading: const Icon(Icons.fastfood_rounded),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Search()),
+                  MaterialPageRoute(
+                    builder: (context) => CowFeedingAssistantScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Chat Assistant'),
+              leading: const Icon(Icons.chat),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChatAssistantScreen(),
+                  ),
                 );
               },
             ),
