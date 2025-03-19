@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gaugyam/core/theme/app_pallete.dart';
+import 'package:gaugyam/features/auth/widgets/auth_gradient_button.dart';
+import 'package:gaugyam/features/dashboard/widgets/buildprofiletext.dart';
+import 'package:gaugyam/features/dashboard/widgets/dashbaoard_field.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -67,48 +71,74 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(centerTitle: true),
-      body: cattleList.isEmpty
-          ? const Center(
-              child: Text(
-                "No Cattle Added Yet",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.brown),
-              ),
-            )
-          : ListView.builder(
-              padding: const EdgeInsets.all(16.0),
-              itemCount: cattleList.length,
-              itemBuilder: (context, index) {
-                final cattle = cattleList[index];
-                return Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                  child: ListTile(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                    tileColor: Colors.grey.shade200,
-                    contentPadding: const EdgeInsets.all(12),
-                    leading: CircleAvatar(
-                      radius: 30,
-                      backgroundImage: cattle['imagePath'] != null
-                          ? FileImage(File(cattle['imagePath']))
-                          : const AssetImage('assets/default_cow.png') as ImageProvider,
-                    ),
-                    title: Text(cattle['name'] ?? 'Unnamed Cattle',
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black)),
-                    subtitle: Text('Age: ${cattle['age']} | Breed: ${cattle['breed']}',
-                        style: const TextStyle(fontSize: 14, color: Colors.black)),
-                    trailing: const Icon(Icons.arrow_forward_ios, color: Colors.brown),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CattleDetailsPage(cattle: cattle),
-                        ),
-                      );
-                    },
+      body:
+          cattleList.isEmpty
+              ? const Center(
+                child: Text(
+                  "No Cattle Added Yet",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.brown,
                   ),
-                );
-              },
-            ),
+                ),
+              )
+              : ListView.builder(
+                padding: const EdgeInsets.all(16.0),
+                itemCount: cattleList.length,
+                itemBuilder: (context, index) {
+                  final cattle = cattleList[index];
+                  return Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      tileColor: Colors.grey.shade200,
+                      contentPadding: const EdgeInsets.all(12),
+                      leading: CircleAvatar(
+                        radius: 30,
+                        backgroundImage:
+                            cattle['imagePath'] != null
+                                ? FileImage(File(cattle['imagePath']))
+                                : const AssetImage('assets/images/cow_icon.png')
+                                    as ImageProvider,
+                      ),
+                      title: Text(
+                        cattle['name'] ?? 'Unnamed Cattle',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                      ),
+                      subtitle: Text(
+                        'Age: ${cattle['age']} | Breed: ${cattle['breed']}',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                        ),
+                      ),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.brown,
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) => CattleDetailsPage(cattle: cattle),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFF722F37),
         onPressed: () async {
@@ -141,12 +171,14 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
   final TextEditingController medicalController = TextEditingController();
   final TextEditingController medicineController = TextEditingController();
   final TextEditingController vaccineController = TextEditingController();
- final TextEditingController dobController = TextEditingController();
+  final TextEditingController dobController = TextEditingController();
   final TextEditingController genderController = TextEditingController();
   File? _image;
 
   Future<void> _pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
@@ -167,9 +199,11 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
                 onTap: _pickImage,
                 child: CircleAvatar(
                   radius: 50,
-                  backgroundImage: _image != null
-                      ? FileImage(_image!)
-                      : const AssetImage('assets/default_cow.png') as ImageProvider,
+                  backgroundImage:
+                      _image != null
+                          ? FileImage(_image!)
+                          : AssetImage('assets/images/cow_icon.png')
+                              as ImageProvider,
                 ),
               ),
               const SizedBox(height: 15),
@@ -183,12 +217,8 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
               _buildTextField(vaccineController, 'Vaccination History'),
               _buildTextField(medicineController, 'Medicines & Supplements'),
               const SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF722F37),
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                ),
+              AuthGradientButton(
+                buttonText: 'Add Cattle',
                 onPressed: () {
                   if (nameController.text.isNotEmpty &&
                       ageController.text.isNotEmpty &&
@@ -208,7 +238,6 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
                     Navigator.pop(context, cattleProfile);
                   }
                 },
-                child: const Text('Add Cattle', style: TextStyle(color: Colors.white, fontSize: 16)),
               ),
             ],
           ),
@@ -220,56 +249,58 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
   Widget _buildTextField(TextEditingController controller, String label) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
-      child: TextField(
+      child: DashboardField(
+        hintText: label,
         controller: controller,
-        style: const TextStyle(color: Colors.black), // Fixed text color to black
-        decoration: InputDecoration(
-          labelText: label,
-          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Color(0xFF722F37), width: 2)),
-          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Color(0xFF722F37), width: 3)),
-        ),
+        keyboardType: TextInputType.text,
+        validator: (value) => value.isEmpty ? 'Please enter $label' : null,
       ),
     );
   }
 
-Widget _buildDatePickerField(TextEditingController controller, String label) {
-  return Padding(
-    padding: const EdgeInsets.only(bottom: 10),
-    child: GestureDetector(
-      onTap: () async {
-        DateTime? pickedDate = await showDatePicker(
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime(2000),
-          lastDate: DateTime.now(),
-        );
-        if (pickedDate != null) {
-          setState(() {
-            controller.text = "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
-          });
-        }
-      },
-      child: AbsorbPointer(
-        child: TextField(
-          controller: controller,
-          style: const TextStyle(color: Colors.black),
-          decoration: InputDecoration(
-            labelText: label,
-            suffixIcon: const Icon(Icons.calendar_today, color: Color(0xFF722F37)),
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF722F37), width: 2),
-            ),
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF722F37), width: 3),
+  Widget _buildDatePickerField(TextEditingController controller, String label) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: GestureDetector(
+        onTap: () async {
+          DateTime? pickedDate = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2000),
+            lastDate: DateTime.now(),
+          );
+          if (pickedDate != null) {
+            setState(() {
+              controller.text =
+                  "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
+            });
+          }
+        },
+        child: AbsorbPointer(
+          child: TextField(
+            controller: controller,
+            style: const TextStyle(color: AppPallete.whiteColor),
+            decoration: InputDecoration(
+              fillColor: AppPallete.backgroundColor,
+              filled: true,
+              hintText: label,
+              hintStyle: const TextStyle(color: AppPallete.greyColor),
+              suffixIcon: const Icon(
+                Icons.calendar_today,
+                color: Color(0xFF722F37),
+              ),
+              enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFF722F37), width: 2),
+              ),
+              focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFF722F37), width: 3),
+              ),
             ),
           ),
         ),
       ),
-    ),
-  );
-}
-
-
+    );
+  }
 }
 
 // Cattle Details Page
@@ -284,46 +315,36 @@ class CattleDetailsPage extends StatelessWidget {
       appBar: AppBar(title: Text(cattle['name'] ?? "Cattle Details")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: CircleAvatar(
-                radius: 60,
-                backgroundImage: cattle['imagePath'] != null
-                    ? FileImage(File(cattle['imagePath']))
-                    : const AssetImage('assets/default_cow.png') as ImageProvider,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: CircleAvatar(
+                  radius: 60,
+                  backgroundImage:
+                      cattle['imagePath'] != null
+                          ? FileImage(File(cattle['imagePath']))
+                          : const AssetImage('assets/images/cow_icon.png')
+                              as ImageProvider,
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            _buildDetailRow("Name", cattle['name']),
-            _buildDetailRow("Age", cattle['age']),
-            _buildDetailRow("Date of Birth", cattle['dob']),
-            _buildDetailRow("Gender", cattle['gender']),
-            _buildDetailRow("Breed", cattle['breed']),
-            _buildDetailRow("Personal History", cattle['history']),
-            _buildDetailRow("Medical History", cattle['medical']),
-            _buildDetailRow("Vaccination History", cattle['vaccine']),
-            _buildDetailRow("Medicines & Supplements", cattle['medicines']),
-          ],
-        ),
+              const SizedBox(height: 20),
+              BuildProfileText.buildDetailRow("Name", cattle['name']),
+              BuildProfileText.buildDetailRow("Age", cattle['age']),
+              BuildProfileText.buildDetailRow("Date of Birth", cattle['dob']),
+              BuildProfileText.buildDetailRow("Gender", cattle['gender']),
+              BuildProfileText.buildDetailRow("Breed", cattle['breed']),
+              BuildProfileText.buildDetailRow("Personal History", cattle['history']),
+              BuildProfileText.buildDetailRow("Medical History", cattle['medical']),
+              BuildProfileText.buildDetailRow("Vaccination History", cattle['vaccine']),
+              BuildProfileText.buildDetailRow("Medicines & Supplements", cattle['medicines']),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildDetailRow(String title, String? value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF722F37))),
-          const SizedBox(height: 4),
-          Text(value ?? "Not provided", style: const TextStyle(fontSize: 14, color: Colors.black)),
-          const Divider(),
-        ],
-      ),
-    );
-  }
+  
 }

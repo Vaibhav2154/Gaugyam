@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gaugyam/features/search_screen/pages/search_screen_content.dart';
-import 'package:gaugyam/features/search_screen/pages/topics/down_cattle_management.dart';
 import 'package:gaugyam/features/search_screen/widgets/category_section.dart';
-import 'package:gaugyam/features/search_screen/widgets/symptom.dart';
 
 class Search extends StatelessWidget {
   const Search({super.key});
@@ -32,9 +30,9 @@ class Search extends StatelessWidget {
             SearchScreenContent(
               topics: topics,
               content:
-                  "Ensuring optimal cattle health is essential for productivity and well-being. This section provides" 
-                  "comprehensive insights into common cattle diseases, their symptoms, prevention, and treatment strategies." 
-                  " From mastitis management to parasite control and heat stress mitigation, explore best practices to maintain a " 
+                  "Ensuring optimal cattle health is essential for productivity and well-being. This section provides"
+                  "comprehensive insights into common cattle diseases, their symptoms, prevention, and treatment strategies."
+                  " From mastitis management to parasite control and heat stress mitigation, explore best practices to maintain a "
                   "healthy and thriving herd.",
             ),
             const SizedBox(height: 24),
