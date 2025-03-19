@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gaugyam/core/theme/theme.dart';
 import 'package:gaugyam/features/auth/pages/phoneauth_page.dart';
@@ -10,6 +11,7 @@ import 'package:gaugyam/firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
+    dotenv.load(fileName: ".env"); // Load .env file
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform
     );
