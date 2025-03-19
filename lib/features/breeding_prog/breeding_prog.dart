@@ -13,9 +13,7 @@ class BreedingProg extends StatefulWidget {
 class _BreedingProgState extends State<BreedingProg> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Center(
             child: Text(
@@ -59,7 +57,6 @@ class _BreedingProgState extends State<BreedingProg> {
             ],
           ),
         ),
-      ),
     );
   }
 
