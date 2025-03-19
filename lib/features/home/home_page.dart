@@ -1,46 +1,151 @@
 import 'package:flutter/material.dart';
-import 'package:gaugyam/features/breeding_prog/breeding_prog.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gaugyam/core/theme/app_pallete.dart';
+import 'package:gaugyam/features/auth/pages/phoneauth_page.dart';
+import 'package:gaugyam/features/auth/providers/auth_providers.dart';
+import 'package:gaugyam/features/breeding_prog/pages/breeding_prog.dart';
+import 'package:gaugyam/features/search_screen/pages/search_screen.dart';
 
-class homePage extends StatelessWidget {
-  const homePage({super.key});
+class HomePage extends ConsumerWidget {
+  const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Container(
-          width: double.infinity,
-          child: Column(
-            children: [
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Listen to auth state changes for navigation
+    ref.listen<AuthStateData>(authStateNotifierProvider, (previous, current) {
+      // If the user was authenticated before but now is not (signed out)
+      if (previous?.state == AuthState.authenticated &&
+          current.state != AuthState.authenticated) {
+        // Navigate to phone auth page and remove all previous routes
+        Navigator.of(context).pushAndRemoveUntil(
+          PhoneAuthScreen.route(),
+          (route) => false, // This removes all previous routes
+        );
+      }
+    });
+    return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(color: AppPallete.gradient1),
+              child: const Text(
+                'Menu',
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
+            ),
+            ListTile(
+              title: const Text('Home'),
+              leading: const Icon(Icons.home),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Breeding Assistant'),
+              leading: const Icon(Icons.pets),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BreedingProg()),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Search'),
+              leading: const Icon(Icons.search),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Search()),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+      appBar: AppBar(
+        title: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Home',
+            style: TextStyle(color: AppPallete.gradient1),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout_outlined, color: AppPallete.gradient1),
+            onPressed: () async {
+              // Sign out using Riverpod auth provider
+              await ref.read(authStateNotifierProvider.notifier).signOut();
+              // Alternative approach: If the listener doesn't work, navigate directly
+              // This is a fallback in case the listener doesn't trigger
+              if (!context.mounted) return;
+              Navigator.of(
+                context,
+              ).pushAndRemoveUntil(PhoneAuthScreen.route(), (route) => false);
+            },
+          ),
+        ],
+      ),
+      body: SizedBox(
+        width: double.infinity,
+        child: Column(
+          children: [
             Container(
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Colors.white),
-              margin: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: AppPallete.whiteColor,
+              ),
+              margin: const EdgeInsets.all(15),
               width: double.infinity,
-              height: 60,
-              // color: Colors.white,
-              padding: EdgeInsets.all(20),
-              child: Text("Hello Farmer, 👋"), ),
-            Container(
+              padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                 ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => BreedingProg()));},  style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF722F37), // Button color
-                  foregroundColor: Colors.white, // Text color
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8), // Rounded corners
+                  const Text(
+                    "Welcome, 👋",
+                    style: TextStyle(
+                      color: AppPallete.gradient1,
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ), child: Text("Breeding Assistant"))
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BreedingProg()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppPallete.gradient1, // Button color
+                      foregroundColor: Colors.white, // Text color
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 12,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          8,
+                        ), // Rounded corners
+                      ),
+                    ),
+                    child: Text("Breeding Assistant"),
+                  ),
                 ],
               ),
             ),
-            SizedBox(height: 100,),
-            Text("Nearest Visit", style: TextStyle(color: Color(0xFF394D6D),)),
-            Container(
-              child: Text("Nearest Doctor Visited"),
-            )
-          ])),
-      ));
+            SizedBox(height: 30),
+            Text("Nearest Visit", style: TextStyle(color: Color(0xFF394D6D))),
+            Text("Nearest Doctor Visited"),
+          ],
+        ),
+      ),
+    );
   }
 }

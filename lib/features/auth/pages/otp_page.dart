@@ -1,70 +1,101 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// 4. Update OtpScreen
+// lib/features/auth/pages/otp_page.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gaugyam/core/theme/app_pallete.dart';
+import 'package:gaugyam/features/auth/providers/auth_providers.dart';
+import 'package:gaugyam/features/auth/widgets/auth_field.dart';
+import 'package:gaugyam/features/auth/widgets/auth_gradient_button.dart';
 import 'package:gaugyam/features/home/home_screen.dart';
 
-
-class OtpScreen extends StatefulWidget {
-  final String verificationId;
-
-  OtpScreen({required this.verificationId});
+class OtpScreen extends ConsumerStatefulWidget {
+  const OtpScreen({super.key});
 
   @override
-  _OtpScreenState createState() => _OtpScreenState();
+  ConsumerState<OtpScreen> createState() => _OtpScreenState();
 }
 
-class _OtpScreenState extends State<OtpScreen> {
+class _OtpScreenState extends ConsumerState<OtpScreen> {
   final _otpController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   void _verifyOtp() async {
     if (_formKey.currentState!.validate()) {
-      try {
-        final credential = PhoneAuthProvider.credential(
-          verificationId: widget.verificationId,
-          smsCode: _otpController.text.trim(),
-        );
-
-        await FirebaseAuth.instance.signInWithCredential(credential);
-
-        // Redirect to home if OTP is valid
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => MainScreen()),
-        );
-      } on FirebaseAuthException catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to sign in: ${e.message}')),
-        );
-      }
+      await ref
+          .read(authStateNotifierProvider.notifier)
+          .verifyOtp(_otpController.text);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    // Listen to auth state changes
+    ref.listen(authStateNotifierProvider, (previous, next) {
+      if (next.state == AuthState.authenticated) {
+        // Navigate to home screen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => MainScreen()),
+        );
+      } else if (next.state == AuthState.error && next.errorMessage != null) {
+        // Show error message
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(next.errorMessage!)));
+      }
+    });
+
     return Scaffold(
-      appBar: AppBar(title: Text('Enter OTP')),
+      appBar: AppBar(
+        // title: Text('Enter OTP', style: TextStyle(color: AppPallete.gradient1)),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
+        child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextFormField(
-                controller: _otpController,
-                decoration: InputDecoration(labelText: 'OTP'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty || value.length != 6) {
-                    return 'Please enter a valid 6-digit OTP';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _verifyOtp,
-                child: Text('Verify OTP'),
+              Image.asset('assets/images/logo.png', height: 200, width: 300),
+              const SizedBox(height: 80),
+              Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Get Verified',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: AppPallete.gradient1,
+                        fontSize: 35,
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    AuthField(
+                      controller: _otpController,
+                      hintText: 'Enter OTP',
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            value.length != 6) {
+                          return 'Please enter a valid 6-digit OTP';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    Consumer(
+                      builder: (context, ref, child) {
+                        // final authState = ref.watch(authStateNotifierProvider);
+                        // final isLoading = ref.read(authStateNotifierProvider.notifier).isLoading;
+                        return AuthGradientButton(
+                          onPressed: _verifyOtp,
+                          buttonText: 'Verify OTP',
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

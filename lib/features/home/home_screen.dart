@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:gaugyam/core/theme/app_pallete.dart';
+import 'package:gaugyam/features/dashboard/pages/dashboard.dart';
 import 'package:gaugyam/features/home/home_page.dart';
+import 'package:gaugyam/features/search_screen/pages/search_screen.dart';
 
-void main() {
-  runApp(MyApp());
-}
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MainScreen(),
-    );
-  }
-}
+
 
 class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }
@@ -25,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _pages = [
     HomeScreen(),
-    SearchScreen(),
+    Search(),
     AppointmentScreen(),
     DashboardScreen(),
   ];
@@ -44,6 +39,7 @@ class _MainScreenState extends State<MainScreen> {
         children: _pages,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: AppPallete.whiteColor,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -73,18 +69,21 @@ class _MainScreenState extends State<MainScreen> {
 }
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Home')),
       body: Center(
-        child: homePage(),
+        child: HomePage(),
       ),
     );
   }
 }
 
 class SearchScreen extends StatelessWidget {
+  const SearchScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,6 +94,8 @@ class SearchScreen extends StatelessWidget {
 }
 
 class AppointmentScreen extends StatelessWidget {
+  const AppointmentScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,11 +106,13 @@ class AppointmentScreen extends StatelessWidget {
 }
 
 class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Dashboard')),
-      body: Center(child: Text('Dashboard Page')),
+      body: DashboardPage(),
     );
   }
 }
