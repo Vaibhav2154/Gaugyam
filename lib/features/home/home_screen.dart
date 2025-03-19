@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gaugyam/core/theme/app_pallete.dart';
+import 'package:gaugyam/features/dashboard/pages/dashboard.dart';
 import 'package:gaugyam/features/home/home_page.dart';
 
 
@@ -111,7 +112,7 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Dashboard')),
-      body: Center(child: Text('Dashboard Page')),
+      body: DashboardPage(),
     );
   }
 }
