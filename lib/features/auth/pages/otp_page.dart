@@ -1,5 +1,3 @@
-// 4. Update OtpScreen
-// lib/features/auth/pages/otp_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gaugyam/core/theme/app_pallete.dart';
@@ -46,9 +44,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
     });
 
     return Scaffold(
-      appBar: AppBar(
-        // title: Text('Enter OTP', style: TextStyle(color: AppPallete.gradient1)),
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -86,11 +82,14 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                     SizedBox(height: 20),
                     Consumer(
                       builder: (context, ref, child) {
-                        // final authState = ref.watch(authStateNotifierProvider);
-                        // final isLoading = ref.read(authStateNotifierProvider.notifier).isLoading;
+                        final authState = ref.watch(authStateNotifierProvider);
+                        final isLoading =
+                            authState.state == AuthState.initial &&
+                            authState.errorMessage == null;
+
                         return AuthGradientButton(
-                          onPressed: _verifyOtp,
-                          buttonText: 'Verify OTP',
+                          onPressed: isLoading ? () {} : _verifyOtp,
+                          buttonText: isLoading ? 'Verifying...' : 'Verify OTP',
                         );
                       },
                     ),
