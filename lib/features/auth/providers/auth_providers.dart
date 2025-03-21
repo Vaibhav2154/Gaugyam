@@ -68,31 +68,51 @@ class AuthService {
   
   // Verify OTP
   Future<AuthStateData> verifyOtp(String phone, String otp) async {
-    try {
-      final response = await _supabase.auth.verifyOTP(
-        phone: "+91${phone.trim()}",
-        token: otp.trim(),
-        type: OtpType.sms,
-      );
-      
-      if (response.session != null) {
-        return AuthStateData(
-          state: AuthState.authenticated,
-          user: response.user,
-        );
-      } else {
-        return AuthStateData(
-          state: AuthState.error,
-          errorMessage: 'Verification failed',
-        );
+  try {
+    final response = await _supabase.auth.verifyOTP(
+      phone: "+91${phone.trim()}",
+      token: otp.trim(),
+      type: OtpType.sms,
+    );
+
+    if (response.session != null) {
+      final user = response.user;
+
+      if (user != null) {
+        // Check if the user already exists
+        final existingUser = await _supabase
+            .from('profiles')
+            .select()
+            .eq('id', user.id)
+            .maybeSingle();
+
+        if (existingUser == null) {
+          // Insert new user into Supabase
+          await _supabase.from('profiles').insert({
+            'id': user.id,  // Uses auth.uid()
+            'phone': phone,
+          });
+        }
       }
-    } catch (e) {
+
+      return AuthStateData(
+        state: AuthState.authenticated,
+        user: response.user,
+      );
+    } else {
       return AuthStateData(
         state: AuthState.error,
-        errorMessage: e.toString(),
+        errorMessage: 'Verification failed',
       );
     }
+  } catch (e) {
+    return AuthStateData(
+      state: AuthState.error,
+      errorMessage: e.toString(),
+    );
   }
+}
+
   
   // Check if user is signed in
   User? getCurrentUser() {
