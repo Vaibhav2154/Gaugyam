@@ -1,5 +1,3 @@
-// 3. Update PhoneAuthScreen
-// lib/features/auth/pages/phone_auth_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gaugyam/core/theme/app_pallete.dart';
@@ -113,12 +111,14 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
                     SizedBox(height: 20),
                     Consumer(
                       builder: (context, ref, child) {
-                        // final authState = ref.watch(authStateNotifierProvider);
-                        // final isLoading = authState.state == AuthState.loading;
+                        final authState = ref.watch(authStateNotifierProvider);
+                        final isLoading =
+                            authState.state == AuthState.initial ||
+                            authState.errorMessage == null;
 
                         return AuthGradientButton(
                           onPressed: _sendCodeToPhoneNumber,
-                          buttonText: 'Send OTP',
+                          buttonText: isLoading ? 'Send OTP' : 'Sending OTP...',
                         );
                       },
                     ),

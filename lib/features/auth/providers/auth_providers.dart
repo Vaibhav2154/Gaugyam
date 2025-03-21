@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'auth_providers.g.dart';
 
@@ -16,26 +16,26 @@ enum AuthState {
 // Auth state class
 class AuthStateData {
   final AuthState state;
-  final String? verificationId;
+  final String? phone;
   final String? errorMessage;
   final User? user;
 
   AuthStateData({
     this.state = AuthState.initial,
-    this.verificationId,
+    this.phone,
     this.errorMessage,
     this.user,
   });
 
   AuthStateData copyWith({
     AuthState? state,
-    String? verificationId,
+    String? phone,
     String? errorMessage,
     User? user,
   }) {
     return AuthStateData(
       state: state ?? this.state,
-      verificationId: verificationId ?? this.verificationId,
+      phone: phone ?? this.phone,
       errorMessage: errorMessage ?? this.errorMessage,
       user: user ?? this.user,
     );
@@ -44,48 +44,21 @@ class AuthStateData {
 
 // Auth Service
 class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final SupabaseClient _supabase = Supabase.instance.client;
   
   // Send OTP to phone number
   Future<AuthStateData> sendOtp(String phoneNumber) async {
     try {
-      Completer<AuthStateData> completer = Completer<AuthStateData>();
-      
-      await _auth.verifyPhoneNumber(
-        phoneNumber: "+91${phoneNumber.trim()}",
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          // Auto verification completed
-          await _auth.signInWithCredential(credential);
-          completer.complete(AuthStateData(
-            state: AuthState.authenticated,
-            user: _auth.currentUser,
-          ));
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          completer.complete(AuthStateData(
-            state: AuthState.error,
-            errorMessage: e.message,
-          ));
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          completer.complete(AuthStateData(
-            state: AuthState.codeSent,
-            verificationId: verificationId,
-          ));
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-          // Only complete if not already completed
-          if (!completer.isCompleted) {
-            completer.complete(AuthStateData(
-              state: AuthState.codeSent,
-              verificationId: verificationId,
-            ));
-          }
-        },
+      await _supabase.auth.signInWithOtp(
+        phone: "+91${phoneNumber.trim()}",
       );
       
-      return await completer.future;
+      return AuthStateData(
+        state: AuthState.codeSent,
+        phone: phoneNumber,
+      );
     } catch (e) {
+      print(e.toString());
       return AuthStateData(
         state: AuthState.error,
         errorMessage: e.toString(),
@@ -94,36 +67,52 @@ class AuthService {
   }
   
   // Verify OTP
-  Future<AuthStateData> verifyOtp(String verificationId, String otp) async {
+  Future<AuthStateData> verifyOtp(String phone, String otp) async {
     try {
-      final credential = PhoneAuthProvider.credential(
-        verificationId: verificationId,
-        smsCode: otp.trim(),
+      final response = await _supabase.auth.verifyOTP(
+        phone: "+91${phone.trim()}",
+        token: otp.trim(),
+        type: OtpType.sms,
       );
       
-      final userCredential = await _auth.signInWithCredential(credential);
-      
-      return AuthStateData(
-        state: AuthState.authenticated,
-        user: userCredential.user,
-      );
-    } on FirebaseAuthException catch (e) {
+      if (response.session != null) {
+        return AuthStateData(
+          state: AuthState.authenticated,
+          user: response.user,
+        );
+      } else {
+        return AuthStateData(
+          state: AuthState.error,
+          errorMessage: 'Verification failed',
+        );
+      }
+    } catch (e) {
       return AuthStateData(
         state: AuthState.error,
-        errorMessage: e.message,
+        errorMessage: e.toString(),
       );
     }
   }
   
   // Check if user is signed in
-  Future<User?> getCurrentUser() async {
-    return _auth.currentUser;
+  User? getCurrentUser() {
+    return _supabase.auth.currentUser;
   }
   
   // Sign out
   Future<void> signOut() async {
-    await _auth.signOut();
+    await _supabase.auth.signOut();
   }
+  
+  // Listen to auth state changes
+  Stream<AuthState> get authStateChanges => 
+    _supabase.auth.onAuthStateChange.map((event) {
+      if (event.session != null) {
+        return AuthState.authenticated;
+      } else {
+        return AuthState.initial;
+      }
+    });
 }
 
 // Auth Service Provider
@@ -137,6 +126,18 @@ AuthService authService(AuthServiceRef ref) {
 class AuthStateNotifier extends _$AuthStateNotifier {
   @override
   AuthStateData build() {
+    // Subscribe to auth state changes
+    ref.listen(authStateChangesProvider, (previous, next) {
+      if (next.valueOrNull == AuthState.authenticated && state.state != AuthState.authenticated) {
+        state = state.copyWith(
+          state: AuthState.authenticated,
+          user: ref.read(authServiceProvider).getCurrentUser(),
+        );
+      } else if (next.valueOrNull == AuthState.initial && state.state == AuthState.authenticated) {
+        state = AuthStateData();
+      }
+    });
+    
     return AuthStateData();
   }
   
@@ -148,16 +149,16 @@ class AuthStateNotifier extends _$AuthStateNotifier {
   }
   
   Future<void> verifyOtp(String otp) async {
-    if (state.verificationId == null) return;
+    if (state.phone == null) return;
     
     final authService = ref.read(authServiceProvider);
-    final result = await authService.verifyOtp(state.verificationId!, otp);
+    final result = await authService.verifyOtp(state.phone!, otp);
     state = result;
   }
   
   Future<void> checkAuthStatus() async {
     final authService = ref.read(authServiceProvider);
-    final user = await authService.getCurrentUser();
+    final user = authService.getCurrentUser();
     
     if (user != null) {
       state = AuthStateData(
@@ -172,4 +173,11 @@ class AuthStateNotifier extends _$AuthStateNotifier {
     await authService.signOut();
     state = AuthStateData();
   }
+}
+
+// Provider for listening to Supabase auth state changes
+@riverpod
+Stream<AuthState> authStateChanges(AuthStateChangesRef ref) {
+  final authService = ref.watch(authServiceProvider);
+  return authService.authStateChanges;
 }
