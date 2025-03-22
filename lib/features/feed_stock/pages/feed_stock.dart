@@ -5,6 +5,8 @@ import 'package:gaugyam/core/theme/app_pallete.dart';
 import 'all_feed_stock_page.dart'; // Import the new page
 
 class FeedStockPage extends StatefulWidget {
+  const FeedStockPage({super.key});
+
   @override
   _FeedStockPageState createState() => _FeedStockPageState();
 }
