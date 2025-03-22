@@ -6,7 +6,9 @@ import 'package:gaugyam/features/auth/pages/phoneauth_page.dart';
 import 'package:gaugyam/features/auth/providers/auth_providers.dart';
 import 'package:gaugyam/features/breeding_prog/pages/breeding_prog.dart';
 import 'package:gaugyam/features/assistant/pages/cow_feeding_assitant_screen.dart';
+import 'package:gaugyam/features/home/charts_dist.dart';
 import 'package:gaugyam/features/search_screen/pages/search_screen.dart';
+import 'package:gaugyam/features/feed_stock/pages/feed_stock.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -142,6 +144,30 @@ class HomePage extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FeedStockPage()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppPallete.gradient1, // Button color
+                      foregroundColor: Colors.white, // Text color
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 12,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          8,
+                        ), // Rounded corners
+                      ),
+                    ),
+                    child: Text("Feed Stock"),
+                  ),
+                   const SizedBox(height: 20),
+                  //CattleStatisticsWidget(),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
