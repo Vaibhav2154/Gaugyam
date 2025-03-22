@@ -107,6 +107,17 @@ class HomePage extends ConsumerWidget {
         ),
         actions: [
           IconButton(
+            icon: Icon(Icons.chat, color: AppPallete.gradient1),
+            onPressed: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatAssistantScreen(),
+                ),
+              );
+            },
+          ),
+          IconButton(
             icon: Icon(Icons.logout_outlined, color: AppPallete.gradient1),
             onPressed: () async {
               // Sign out using Riverpod auth provider
@@ -123,80 +134,81 @@ class HomePage extends ConsumerWidget {
       ),
       body: SizedBox(
         width: double.infinity,
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: AppPallete.whiteColor,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: AppPallete.whiteColor,
+                ),
+                margin: const EdgeInsets.all(15),
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    const Text(
+                      "Welcome, 👋",
+                      style: TextStyle(
+                        color: AppPallete.gradient1,
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => FeedStockPage()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppPallete.gradient1, // Button color
+                        foregroundColor: Colors.white, // Text color
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            8,
+                          ), // Rounded corners
+                        ),
+                      ),
+                      child: Text("Feed Stock"),
+                    ),
+                    const SizedBox(height: 20),
+                    //CattleStatisticsWidget(),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => BreedingProg()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppPallete.gradient1, // Button color
+                        foregroundColor: Colors.white, // Text color
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            8,
+                          ), // Rounded corners
+                        ),
+                      ),
+                      child: Text("Breeding Assistant"),
+                    ),
+                  ],
+                ),
               ),
-              margin: const EdgeInsets.all(15),
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  const Text(
-                    "Welcome, 👋",
-                    style: TextStyle(
-                      color: AppPallete.gradient1,
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => FeedStockPage()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppPallete.gradient1, // Button color
-                      foregroundColor: Colors.white, // Text color
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          8,
-                        ), // Rounded corners
-                      ),
-                    ),
-                    child: Text("Feed Stock"),
-                  ),
-                   const SizedBox(height: 20),
-                  //CattleStatisticsWidget(),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => BreedingProg()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppPallete.gradient1, // Button color
-                      foregroundColor: Colors.white, // Text color
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          8,
-                        ), // Rounded corners
-                      ),
-                    ),
-                    child: Text("Breeding Assistant"),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 30),
-            Text("Nearest Visit", style: TextStyle(color: Color(0xFF394D6D))),
-            Text("Nearest Doctor Visited"),
-          ],
+              SizedBox(height: 30),
+              CattleStatisticsWidget(),
+            ],
+          ),
         ),
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gaugyam/core/theme/app_pallete.dart';
+import 'package:gaugyam/features/assistant/pages/cow_feeding_assitant_screen.dart';
 import 'package:gaugyam/features/dashboard/pages/dashboard.dart';
 import 'package:gaugyam/features/home/home_page.dart';
-import 'package:gaugyam/features/search_screen/pages/search_screen.dart';
 
 
 
@@ -12,6 +12,7 @@ class MainScreen extends StatefulWidget {
 
 
   @override
+  // ignore: library_private_types_in_public_api
   _MainScreenState createState() => _MainScreenState();
 }
 
@@ -20,9 +21,9 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _pages = [
     HomeScreen(),
-    Search(),
-    AppointmentScreen(),
     DashboardScreen(),
+    AppointmentScreen(),
+    CowFeedingAssistantScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -46,16 +47,16 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
+            icon: Icon(Icons.dashboard),
+            label: 'Cattles',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today),
             label: 'Appointment',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Cattles',
+            icon: Icon(Icons.food_bank),
+            label: 'Feed Planner',
           ),
         ],
         currentIndex: _selectedIndex,
