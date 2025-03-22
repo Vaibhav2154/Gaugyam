@@ -12,33 +12,40 @@ class AddDetailsPage extends StatefulWidget {
   const AddDetailsPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _AddDetailsPageState createState() => _AddDetailsPageState();
 }
 
 class _AddDetailsPageState extends State<AddDetailsPage> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
-  final TextEditingController breedController = TextEditingController();
   final TextEditingController historyController = TextEditingController();
   final TextEditingController medicalController = TextEditingController();
   final TextEditingController medicineController = TextEditingController();
   final TextEditingController vaccineController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
-  final TextEditingController genderController = TextEditingController();
+
   File? _image;
   bool _isUploading = false;
   final supabase = Supabase.instance.client;
   final uuid = Uuid();
 
   late final String cattleUUID;
-  
+
+  // Dropdown selections
+  String selectedGender = 'Male';
+  String selectedBreed = 'Gir'; // Default breed
+
+  final List<String> indianCowBreeds = [
+    'Gir', 'Sahiwal', 'Red Sindhi', 'Ongole', 'Kankrej', 'Hariana', 
+    'Tharparkar', 'Deoni', 'Nimari', 'Punganur', 'Krishna Valley', 
+    'Amrit Mahal', 'Kherigarh', 'Rathi', 'Malvi'
+  ];
+
   @override
   void initState() {
     super.initState();
     cattleUUID = uuid.v4();
   }
-
 
   Future<void> _pickImage() async {
     final pickedFile = await ImagePicker().pickImage(
@@ -51,111 +58,71 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
     }
   }
 
-  // Upload image to Supabase Storage
   Future<String?> _uploadImage(File imageFile) async {
     try {
       final String fileName = '${uuid.v4()}${path.extension(imageFile.path)}';
-      await supabase.storage
-          .from('cattleimages')
-          .upload(fileName, imageFile);
-      
-      // Get public URL for the uploaded file
-      final imageUrl = supabase.storage
-          .from('cattleimages')
-          .getPublicUrl(fileName);
-          
+      await supabase.storage.from('cattleimages').upload(fileName, imageFile);
+
+      final imageUrl = supabase.storage.from('cattleimages').getPublicUrl(fileName);
       return imageUrl;
     } catch (error) {
-      // Show error snackbar
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-        content: Text('Error uploading image: $error'),
-        backgroundColor: Colors.red,
-        duration: const Duration(seconds: 3),
-          ),
-        );
-      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error uploading image: $error'), backgroundColor: Colors.red),
+      );
       print('Error uploading image: $error');
       return null;
     }
   }
 
-  // Store cattle data in Supabase with user ID
   Future<Map<String, dynamic>> _storeCattleData(Map<String, dynamic> cattleData) async {
     try {
-      // Get current user ID
       final userId = supabase.auth.currentUser?.id;
-      
-      if (userId == null) {
-        throw Exception('User not authenticated');
-      }
-      
-      // Add the user ID to the cattle data
+      if (userId == null) throw Exception('User not authenticated');
+
       cattleData['uuid'] = userId;
-      
-      // Insert data and return the inserted row
-      final response = await supabase
-          .from('cattle')
-          .insert(cattleData)
-          .select()
-          .single();
-      
+      final response = await supabase.from('cattle').insert(cattleData).select().single();
       return response;
     } catch (error) {
       print('Error storing cattle data: $error');
-      // Return original data if Supabase fails
       return cattleData;
     }
   }
 
   void _handleAddCattle() {
-    if (nameController.text.isEmpty ||
-        ageController.text.isEmpty ||
-        breedController.text.isEmpty) {
-      // Show validation error
+    if (nameController.text.isEmpty || ageController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please fill in all required fields'),
-          backgroundColor: Colors.red,
-        ),
+        const SnackBar(content: Text('Please fill in all required fields'), backgroundColor: Colors.red),
       );
       return;
     }
-    
+
     setState(() => _isUploading = true);
-    
-    // Create initial cattle profile
+
     final cattleProfile = {
       'name': nameController.text,
       'age': ageController.text,
       'dob': dobController.text,
-      'gender': genderController.text,
-      'breed': breedController.text,
+      'gender': selectedGender,
+      'breed': selectedBreed,
       'history': historyController.text,
       'medical': medicalController.text,
       'vaccine': vaccineController.text,
       'medicines': medicineController.text,
-      'imagePath': _image?.path, // Keep for local storage compatibility
+      'imagePath': _image?.path,
       'created_at': DateTime.now().toIso8601String(),
     };
-    
+
     _processAndSaveData(cattleProfile);
   }
-  
-  // Handle the async operations separately
+
   Future<void> _processAndSaveData(Map<String, dynamic> profile) async {
     try {
-      // Upload image if available
       if (_image != null) {
         final imageUrl = await _uploadImage(_image!);
         profile['image_url'] = imageUrl;
       }
-      
-      // Store in Supabase
+
       final storedProfile = await _storeCattleData(profile);
-      
-      
       if (mounted) {
         setState(() => _isUploading = false);
         Navigator.pop(context, storedProfile);
@@ -164,12 +131,8 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
       print('Error processing cattle data: $error');
       if (mounted) {
         setState(() => _isUploading = false);
-        // Show error message
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error adding cattle: ${error.toString()}'),
-            backgroundColor: Colors.red,
-          ),
+          SnackBar(content: Text('Error adding cattle: ${error.toString()}'), backgroundColor: Colors.red),
         );
       }
     }
@@ -190,19 +153,40 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
                     onTap: _pickImage,
                     child: CircleAvatar(
                       radius: 50,
-                      backgroundImage:
-                          _image != null
-                              ? FileImage(_image!)
-                              : const AssetImage('assets/images/cow_icon.png')
-                                  as ImageProvider,
+                      backgroundImage: _image != null
+                          ? FileImage(_image!)
+                          : const AssetImage('assets/images/cow_icon.png') as ImageProvider,
                     ),
                   ),
                   const SizedBox(height: 15),
                   _buildTextField(nameController, 'Cattle Name'),
                   _buildTextField(ageController, 'Age'),
                   _buildDatePickerField(dobController, 'Date of Birth'),
-                  _buildTextField(genderController, 'Gender'),
-                  _buildTextField(breedController, 'Breed'),
+                  
+                  // Gender Dropdown
+                  _buildDropdown(
+                    label: 'Gender',
+                    value: selectedGender,
+                    items: ['Male', 'Female'],
+                    onChanged: (value) {
+                      setState(() {
+                        selectedGender = value!;
+                      });
+                    },
+                  ),
+
+                  // Indian Cow Breeds Dropdown
+                  _buildDropdown(
+                    label: 'Breed',
+                    value: selectedBreed,
+                    items: indianCowBreeds,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedBreed = value!;
+                      });
+                    },
+                  ),
+
                   _buildTextField(historyController, 'Personal History'),
                   _buildTextField(medicalController, 'Medical History'),
                   _buildTextField(vaccineController, 'Vaccination History'),
@@ -241,45 +225,41 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
   }
 
   Widget _buildDatePickerField(TextEditingController controller, String label) {
+    return GestureDetector(
+      onTap: () async {
+        DateTime? pickedDate = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime(2000),
+          lastDate: DateTime.now(),
+        );
+        if (pickedDate != null) {
+          setState(() {
+            controller.text = "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
+          });
+        }
+      },
+      child: AbsorbPointer(child: _buildTextField(controller, label)),
+    );
+  }
+
+  Widget _buildDropdown({required String label, required String value, required List<String> items, required ValueChanged<String?> onChanged}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
-      child: GestureDetector(
-        onTap: () async {
-          DateTime? pickedDate = await showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime(2000),
-            lastDate: DateTime.now(),
-          );
-          if (pickedDate != null) {
-            setState(() {
-              controller.text =
-                  "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
-            });
-          }
-        },
-        child: AbsorbPointer(
-          child: TextField(
-            controller: controller,
-            style: const TextStyle(color: AppPallete.whiteColor),
-            decoration: InputDecoration(
-              fillColor: AppPallete.backgroundColor,
-              filled: true,
-              hintText: label,
-              hintStyle: const TextStyle(color: AppPallete.greyColor),
-              suffixIcon: const Icon(
-                Icons.calendar_today,
-                color: Color(0xFF722F37),
-              ),
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFF722F37), width: 2),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFF722F37), width: 3),
-              ),
-            ),
+      child: DropdownButtonFormField<String>(
+        value: value,
+        items: items.map((item) => DropdownMenuItem(value: item, child: Text(item))).toList(),
+        onChanged: onChanged,
+        decoration: InputDecoration(filled: true,
+          fillColor: AppPallete.backgroundColor,
+          hintText: label,
+          hintStyle: const TextStyle(color: AppPallete.greyColor),
+          enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Color(0xFF722F37), width: 2),
           ),
-        ),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Color(0xFF722F37), width: 3),
+          ),),
       ),
     );
   }
