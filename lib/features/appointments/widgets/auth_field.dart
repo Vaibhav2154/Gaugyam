@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gaugyam/core/theme/app_pallete.dart';
 
-class DashboardField extends StatelessWidget {
+class AppointmentField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   final bool isObscureText;
   final TextInputType keyboardType;
-  const DashboardField({
+  const AppointmentField({
     super.key,
     required this.hintText,
     required this.controller,
@@ -17,15 +17,12 @@ class DashboardField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: const TextStyle(color: AppPallete.whiteColor),
-      cursorColor: AppPallete.gradient1,
       controller: controller,
       keyboardType: keyboardType,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: TextStyle(color: AppPallete.whiteColor),
+        hintStyle: TextStyle(color: AppPallete.greyColor),
         filled: true,
-        fillColor: AppPallete.backgroundColor,
         contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),

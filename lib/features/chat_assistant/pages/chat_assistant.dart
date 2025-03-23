@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gaugyam/core/theme/app_pallete.dart';
-import 'package:gaugyam/features/assistant/services/gemini_services.dart';
+import 'package:gaugyam/features/chat_assistant/services/gemini_services.dart';
 
 class ChatAssistantScreen extends StatefulWidget {
   const ChatAssistantScreen({super.key});
@@ -117,10 +117,10 @@ class _ChatAssistantScreenState extends State<ChatAssistantScreen> {
         ),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-          decoration: BoxDecoration(
-            color: Colors.grey[900],
-            border: Border(top: BorderSide(color: Colors.grey[800]!, width: 1)),
-          ),
+          // decoration: BoxDecoration(
+          //   color: AppPallete.backgroundColor,
+          //   border: Border(top: BorderSide(color: Colors.grey[800]!, width: 1)),
+          // ),
           child: Row(
             children: [
               Expanded(
@@ -129,26 +129,26 @@ class _ChatAssistantScreenState extends State<ChatAssistantScreen> {
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     hintText: "Ask about cow feeding...",
-                    hintStyle: TextStyle(color: Colors.grey),
+                    hintStyle: TextStyle(color: AppPallete.whiteColor),
                     filled: true,
-                    fillColor: Colors.grey[800],
+                    fillColor: AppPallete.backgroundColor,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(24),
+                      borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
                     ),
                     contentPadding: EdgeInsets.symmetric(
-                      horizontal: 16,
+                      horizontal: 20,
                       vertical: 8,
                     ),
                   ),
                   minLines: 1,
-                  maxLines: 3,
+                  maxLines: 5,
                 ),
               ),
-              SizedBox(width: 8),
+              // SizedBox(width: 4),
               Material(
-                color: AppPallete.gradient1,
-                borderRadius: BorderRadius.circular(24),
+                color: AppPallete.whiteColor,
+                borderRadius: BorderRadius.circular(12),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(24),
                   onTap: isLoading ? null : sendChatMessage,
@@ -160,11 +160,11 @@ class _ChatAssistantScreenState extends State<ChatAssistantScreen> {
                               width: 24,
                               height: 24,
                               child: CircularProgressIndicator(
-                                color: Colors.white,
+                                color: AppPallete.gradient1,
                                 strokeWidth: 2,
                               ),
                             )
-                            : Icon(Icons.send, color: Colors.white),
+                            : Icon(Icons.send, color: AppPallete.gradient1),
                   ),
                 ),
               ),
