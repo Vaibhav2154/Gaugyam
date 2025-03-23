@@ -23,7 +23,7 @@ class DashboardField extends StatelessWidget {
       keyboardType: keyboardType,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: TextStyle(color: AppPallete.greyColor),
+        hintStyle: TextStyle(color: AppPallete.whiteColor),
         filled: true,
         fillColor: AppPallete.backgroundColor,
         contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
