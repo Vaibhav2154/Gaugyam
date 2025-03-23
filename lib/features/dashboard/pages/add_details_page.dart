@@ -253,7 +253,7 @@ class _AddDetailsPageState extends State<AddDetailsPage> {
         decoration: InputDecoration(filled: true,
           fillColor: AppPallete.backgroundColor,
           hintText: label,
-          hintStyle: const TextStyle(color: AppPallete.greyColor),
+          hintStyle: const TextStyle(color: AppPallete.primaryFgColor),
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Color(0xFF722F37), width: 2),
           ),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:gaugyam/core/theme/app_pallete.dart';
-import 'package:gaugyam/features/assistant/services/gemini_services.dart';
+import 'package:gaugyam/features/cowfeedingassistant/services/gemini_services.dart';
+
 
 class CowFeedingAssistantScreen extends StatefulWidget {
   const CowFeedingAssistantScreen({super.key});
@@ -100,10 +101,10 @@ class _CowFeedingAssistantScreenState extends State<CowFeedingAssistantScreen> {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextField(
         controller: controller,
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: AppPallete.accentFgColor),
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: TextStyle(color: Colors.white70),
+          labelStyle: TextStyle(color: AppPallete.whiteColor),
           filled: true,
           fillColor: AppPallete.backgroundColor,
           prefixIcon: Icon(icon ?? Icons.grass, color: AppPallete.gradient1),
@@ -134,9 +135,9 @@ class _CowFeedingAssistantScreenState extends State<CowFeedingAssistantScreen> {
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: productionStage,
-          dropdownColor: AppPallete.backgroundColor,
+          dropdownColor: AppPallete.whiteColor,
           icon: Icon(Icons.arrow_drop_down, color: AppPallete.gradient1),
-          style: TextStyle(color: Colors.white, fontSize: 16),
+          style: TextStyle(color: AppPallete.accentFgColor, fontSize: 16),
           isExpanded: true,
           items:
               [
