@@ -10,7 +10,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
     await dotenv.load(fileName: ".env"); // Load .env file
-    
     // Initialize Supabase
     await Supabase.initialize(
       url: dotenv.env['SUPABASE_URL'] ?? '',
