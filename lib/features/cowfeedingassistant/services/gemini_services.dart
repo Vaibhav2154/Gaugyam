@@ -4,8 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class GeminiService {
-  // Replace with your actual Gemini API key
-  // final String apiKey = 'AIzaSyB1R_hKDu2P9j0cD7b_ZM11xW8qz0AorDw';
+
   final String apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
   // Store API key in environment variables or secure storage
