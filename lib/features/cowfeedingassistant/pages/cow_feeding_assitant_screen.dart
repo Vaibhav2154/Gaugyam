@@ -3,7 +3,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:gaugyam/core/theme/app_pallete.dart';
 import 'package:gaugyam/features/cowfeedingassistant/services/gemini_services.dart';
 
-
 class CowFeedingAssistantScreen extends StatefulWidget {
   const CowFeedingAssistantScreen({super.key});
 
@@ -214,7 +213,9 @@ class _CowFeedingAssistantScreenState extends State<CowFeedingAssistantScreen> {
                   onPressed: isLoading ? null : fetchCowFeedingPlan,
                   child:
                       isLoading
-                          ? CircularProgressIndicator(color: AppPallete.whiteColor)
+                          ? CircularProgressIndicator(
+                            color: AppPallete.whiteColor,
+                          )
                           : Text(
                             "Get Feeding Plan",
                             style: TextStyle(
@@ -243,7 +244,10 @@ class _CowFeedingAssistantScreenState extends State<CowFeedingAssistantScreen> {
                   },
                   child: Text(
                     "Clear",
-                    style: TextStyle(fontSize: 16, color: AppPallete.whiteColor),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: AppPallete.whiteColor,
+                    ),
                   ),
                 ),
               ],
@@ -295,7 +299,10 @@ class _CowFeedingAssistantScreenState extends State<CowFeedingAssistantScreen> {
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
                     "Your cow feeding recommendations will appear here.",
-                    style: TextStyle(fontSize: 16, color: AppPallete.whiteColor),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: AppPallete.whiteColor,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -310,11 +317,11 @@ class _CowFeedingAssistantScreenState extends State<CowFeedingAssistantScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           "Cow Feeding Assistant",
           style: TextStyle(color: AppPallete.gradient1),
         ),
-        centerTitle: true,
       ),
       body: _buildFeedingPlanTab(),
 

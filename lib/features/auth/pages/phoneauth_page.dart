@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gaugyam/core/theme/app_pallete.dart';
 import 'package:gaugyam/features/auth/pages/otp_page.dart';
+import 'package:gaugyam/features/auth/pages/email_signin_page.dart';
 import 'package:gaugyam/features/auth/providers/auth_providers.dart';
 import 'package:gaugyam/features/auth/widgets/auth_field.dart';
 import 'package:gaugyam/features/auth/widgets/auth_gradient_button.dart';
@@ -23,7 +24,6 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
   @override
   void initState() {
     super.initState();
-    // Check if user is already signed in
     Future.microtask(() {
       ref.read(authStateNotifierProvider.notifier).checkAuthStatus();
     });
@@ -62,12 +62,12 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
     });
 
     return Scaffold(
-      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
+              SizedBox(height: 180),
               Image.asset('assets/images/logo.png', height: 200, width: 300),
               const SizedBox(height: 80),
               Form(
@@ -75,6 +75,7 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    
                     Text(
                       'Get Started',
                       style: TextStyle(
@@ -92,7 +93,7 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
                       ),
                     ),
                     SizedBox(height: 30),
-                    SizedBox(height: 20),
+
                     AuthField(
                       controller: _phoneController,
                       keyboardType: TextInputType.phone,
@@ -107,6 +108,7 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
                         }
                         return null;
                       },
+                      obscureText: false,
                     ),
                     SizedBox(height: 20),
                     Consumer(
@@ -121,6 +123,19 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
                           buttonText: isLoading ? 'Send OTP' : 'Sending OTP...',
                         );
                       },
+                    ),
+                    SizedBox(height: 20),
+                    AuthGradientButton(
+                      onPressed: () {
+                        // Navigate to Email Sign In page
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EmailSignInScreen(),
+                          ),
+                        );
+                      },
+                      buttonText: 'Sign In with Email',
                     ),
                   ],
                 ),

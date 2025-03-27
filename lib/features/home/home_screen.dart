@@ -90,7 +90,9 @@ class AppointmentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Appointment')),
+      appBar: AppBar(
+                automaticallyImplyLeading: false,
+        title: Text('Appointment')),
       body: Center(child: Text('Appointment Page')),
     );
   }
@@ -102,7 +104,9 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Dashboard')),
+      appBar: AppBar(
+                automaticallyImplyLeading: false,
+        title: Text('Dashboard')),
       body: DashboardPage(),
     );
   }

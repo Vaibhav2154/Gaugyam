@@ -1,0 +1,95 @@
+* [33m848b261[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mvai[m[33m)[m Removed back button from home page
+[31m|[m *   [33m88349e1[m[33m ([m[1;31morigin/main[m[33m)[m Merge pull request #29 from Vaibhav2154/vai
+[31m|[m [32m|[m[31m\[m  
+[31m|[m [32m|[m[31m/[m  
+[31m|[m[31m/[m[32m|[m   
+[31m|[m *   [33mb75fb5d[m Merge pull request #24 from Vaibhav2154/dev
+[31m|[m [34m|[m[35m\[m  
+[31m|[m * [35m\[m   [33m8596f5e[m Merge pull request #21 from Vaibhav2154/dev
+[31m|[m [36m|[m[1;31m\[m [35m\[m  
+[31m|[m * [1;31m\[m [35m\[m   [33m64b2903[m Merge pull request #18 from Vaibhav2154/dev
+[31m|[m [1;32m|[m[1;33m\[m [1;31m\[m [35m\[m  
+[31m|[m [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m *   [33m00c5309[m[33m ([m[1;31morigin/aash[m[33m)[m Merge pull request #28 from Vaibhav2154/vai
+[31m|[m [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [1;34m|[m[31m\[m  
+[31m|[m [1;32m|[m[31m_[m[1;33m|[m[31m_[m[1;31m|[m[31m_[m[35m|[m[31m_[m[1;34m|[m[31m/[m  
+[31m|[m[31m/[m[1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [1;34m|[m   
+[31m|[m [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m *   [33m9328b0f[m Merge pull request #25 from Vaibhav2154/vai
+[31m|[m [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [1;36m|[m[31m\[m  
+[31m|[m [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m * [31m\[m   [33mf65bc48[m Merge pull request #23 from Vaibhav2154/dev
+[31m|[m [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m[35m\[m [31m\[m  
+[31m|[m [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m[35m/[m [31m/[m  
+[31m|[m [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m[35m/[m[32m|[m [31m|[m   
+[31m|[m [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m [31m|[m *   [33m8dc3e25[m[33m ([m[1;31morigin/dev[m[33m)[m Merge pull request #27 from Vaibhav2154/vai
+[31m|[m [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m [31m|[m [34m|[m[31m\[m  
+[31m|[m [1;32m|[m[31m_[m[1;33m|[m[31m_[m[1;31m|[m[31m_[m[35m|[m[31m_[m[32m|[m[31m_[m[31m|[m[31m_[m[34m|[m[31m/[m  
+[31m|[m[31m/[m[1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m [31m|[m [34m|[m   
+* [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m [31m|[m [34m|[m [33m366a67f[m[33m ([m[1;31morigin/vai[m[33m)[m Update gemini_services.dart
+* [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m [31m|[m [34m|[m [33m65d9ca1[m Update gemini_services.dart
+[31m|[m [1;32m|[m[31m_[m[1;33m|[m[31m_[m[1;31m|[m[31m_[m[35m|[m[31m_[m[32m|[m[31m/[m [34m/[m  
+[31m|[m[31m/[m[1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m [34m|[m   
+[31m|[m [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m * [33mfbbfb5b[m Merge pull request #26 from Vaibhav2154/vai
+[31m|[m [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m[35m/[m[31m|[m 
+[31m|[m [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m[35m/[m[32m|[m[31m/[m  
+[31m|[m [1;32m|[m[31m_[m[1;33m|[m[31m_[m[1;31m|[m[31m_[m[35m|[m[31m/[m[32m|[m   
+[31m|[m[31m/[m[1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m   
+* [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m [33m85bc85f[m UI changes
+* [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m [33mae1b1a8[m Cattle statistics feature
+* [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m [33madfbc23[m UI changes
+* [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m [33m0df2612[m File restructuring
+* [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m [33m83d3d69[m Appointiments scheduling
+* [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m [33mf8ef00c[m reorganise file structure
+* [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [32m|[m [33mc1b675a[m Update main file
+[1;31m|[m [1;32m|[m [1;33m|[m [1;31m|[m * [32m|[m [33m75310b6[m Merge pull request #22 from Vaibhav2154/vai
+[1;31m|[m [1;32m|[m [1;33m|[m [1;31m|[m[1;31m/[m[1;31m|[m [32m|[m 
+[1;31m|[m [1;32m|[m[1;31m_[m[1;33m|[m[1;31m_[m[1;31m|[m[1;31m/[m [32m/[m  
+[1;31m|[m[1;31m/[m[1;32m|[m [1;33m|[m [1;31m|[m [32m|[m   
+* [1;32m|[m [1;33m|[m [1;31m|[m [32m|[m [33m1c5e3e4[m Fixed cattle stats data and reorganizing UI
+* [1;32m|[m [1;33m|[m [1;31m|[m [32m|[m   [33m8e66d0b[m Merge pull request #20 from Vaibhav2154/dev
+[1;34m|[m[1;31m\[m [1;32m\[m [1;33m\[m [1;31m\[m [32m\[m  
+[1;34m|[m [1;31m|[m [1;32m|[m[1;31m_[m[1;33m|[m[1;31m/[m [32m/[m  
+[1;34m|[m [1;31m|[m[1;31m/[m[1;32m|[m [1;33m|[m [32m|[m   
+[1;34m|[m * [1;32m|[m [1;33m|[m [32m|[m   [33m3f1eb7d[m Merge pull request #19 from Vaibhav2154/aash
+[1;34m|[m [1;33m|[m[32m\[m [1;32m\[m [1;33m\[m [32m\[m  
+[1;34m|[m [1;33m|[m [32m|[m[1;33m_[m[1;32m|[m[1;33m/[m [32m/[m  
+[1;34m|[m [1;33m|[m[1;33m/[m[32m|[m [1;32m|[m [32m/[m   
+[1;34m|[m [1;33m|[m [32m|[m [1;32m|[m[32m/[m    
+[1;34m|[m [1;33m|[m [32m|[m[32m/[m[1;32m|[m     
+[1;34m|[m [1;33m|[m * [1;32m|[m [33mdf2df28[m add feed stock feature and enhanced cow profile adding
+[1;34m|[m [1;33m|[m[1;33m/[m [1;32m/[m  
+[1;34m|[m * [1;32m|[m   [33mb76c1f3[m Merge pull request #17 from Vaibhav2154/vai
+[1;34m|[m [32m|[m[1;34m\[m [1;32m\[m  
+[1;34m|[m [32m|[m[1;34m/[m [1;32m/[m  
+[1;34m|[m[1;34m/[m[32m|[m [1;32m|[m   
+* [32m|[m [1;32m|[m [33m5dfb8f5[m Shifted data from local to remote db
+[32m|[m[32m/[m [1;32m/[m  
+* [1;32m|[m [33m8c59f46[m Merge pull request #14 from Vaibhav2154/main
+[34m|[m[1;32m\[m[1;32m|[m 
+[34m|[m *   [33mcd229ba[m Merge pull request #13 from Vaibhav2154/dev
+[34m|[m [36m|[m[1;31m\[m  
+[34m|[m * [1;31m\[m   [33m1ef3fa1[m Merge pull request #10 from Vaibhav2154/dev
+[34m|[m [1;32m|[m[1;33m\[m [1;31m\[m  
+[34m|[m * [1;33m\[m [1;31m\[m   [33mcea4115[m Merge pull request #7 from Vaibhav2154/dev
+[34m|[m [1;34m|[m[1;35m\[m [1;33m\[m [1;31m\[m  
+[34m|[m * [1;35m\[m [1;33m\[m [1;31m\[m   [33meeadab0[m Merge pull request #2 from Vaibhav2154/dev
+[34m|[m [1;36m|[m[31m\[m [1;35m\[m [1;33m\[m [1;31m\[m  
+[34m|[m * [31m\[m [1;35m\[m [1;33m\[m [1;31m\[m   [33mb0335a7[m Merge pull request #1 from Vaibhav2154/dev
+[34m|[m [32m|[m[33m\[m [31m\[m [1;35m\[m [1;33m\[m [1;31m\[m  
+* [32m|[m [33m|[m [31m|[m [1;35m|[m [1;33m|[m [1;31m|[m [33mc4b61d9[m add cattle dashboard
+[1;31m|[m [32m|[m[1;31m_[m[33m|[m[1;31m_[m[31m|[m[1;31m_[m[1;35m|[m[1;31m_[m[1;33m|[m[1;31m/[m  
+[1;31m|[m[1;31m/[m[32m|[m [33m|[m [31m|[m [1;35m|[m [1;33m|[m   
+* [32m|[m [33m|[m [31m|[m [1;35m|[m [1;33m|[m   [33m5dd698a[m Merge pull request #12 from Vaibhav2154/vai
+[1;33m|[m[35m\[m [32m\[m [33m\[m [31m\[m [1;35m\[m [1;33m\[m  
+[1;33m|[m [35m|[m[1;33m_[m[32m|[m[1;33m_[m[33m|[m[1;33m_[m[31m|[m[1;33m_[m[1;35m|[m[1;33m/[m  
+[1;33m|[m[1;33m/[m[35m|[m [32m|[m [33m|[m [31m|[m [1;35m|[m   
+[1;33m|[m * [32m|[m [33m|[m [31m|[m [1;35m|[m [33m2c7edfc[m changed relavant pages
+[1;33m|[m * [32m|[m [33m|[m [31m|[m [1;35m|[m [33mb515f00[m changed auth providor
+[1;33m|[m * [32m|[m [33m|[m [31m|[m [1;35m|[m [33m075ad3e[m Changed firebase to supa base
+[1;33m|[m * [32m|[m [33m|[m [31m|[m [1;35m|[m [33mca020ad[m Added required dependencies
+* [35m|[m [32m|[m [33m|[m [31m|[m [1;35m|[m [33m4e59dc7[m Merge pull request #9 from Vaibhav2154/vai
+[36m|[m[35m\[m[35m|[m [32m|[m [33m|[m [31m|[m [1;35m|[m 
+[36m|[m * [32m|[m [33m|[m [31m|[m [1;35m|[m [33mb33d7f1[m Added dotenv
+* [1;31m|[m [32m|[m [33m|[m [31m|[m [1;35m|[m [33mdb1d190[m Merge pull request #8 from Vaibhav2154/vai
+[1;35m|[m[1;31m\[m[1;31m|[m [32m|[m [33m|[m [31m|[m [1;35m|[m 
+[1;35m|[m [1;31m|[m[1;35m_[m[32m|[m[1;35m_[m[33m|[m[1;35m_[m[31m|[m[1;35m/[m  
+[1;35m|[m[1;35m/[m[1;31m|[m [32m|[m [33m|[m [31m|[m   
+[1
