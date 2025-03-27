@@ -27,7 +27,9 @@ class _CattleDetailsPageState extends State<CattleDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.cattle['name'] ?? "Cattle Details")),
+      
+      appBar: AppBar(
+        title: Text(widget.cattle['name'] ?? "Cattle Details")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

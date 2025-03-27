@@ -96,6 +96,7 @@ class HomePage extends ConsumerWidget {
       //   ),
       // ),
       appBar:  AppBar(
+        automaticallyImplyLeading: false,
         title: Align(
           alignment: Alignment.centerLeft,
           child: Text(

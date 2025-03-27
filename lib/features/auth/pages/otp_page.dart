@@ -77,7 +77,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                           return 'Please enter a valid 6-digit OTP';
                         }
                         return null;
-                      },
+                      }, obscureText: false,
                     ),
                     SizedBox(height: 20),
                     Consumer(

@@ -11,7 +11,7 @@ class AuthField extends StatelessWidget {
     required this.hintText,
     required this.controller,
     this.isObscureText = false,
-    required String? Function(dynamic value) validator, required this.keyboardType,
+    required String? Function(dynamic value) validator, required this.keyboardType, required bool obscureText,
   });
 
   @override
